@@ -8,15 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Hello</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style type="text/css">
-
-
-    </style>
 </head>
 <body>
 <div class="container">
-    <p>This is my first Django project!</p>
-    <p>Hello World!</p>
+    <h1>My First Blog!</h1>
+    {% for article in articles %}
+        <h3>{{ article.pk }}. {{ article.title }}</h3>
+        <p>{{ article.author }} | {{ article.created_at }}</p>
+        <div>{{ article.text }}</div>
+    {% endfor %}
+    <a href="/articles/add/">Добавить Статью</a>
 </div>
 </body>
 </html>

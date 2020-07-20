@@ -12,12 +12,13 @@
 <body>
 <div class="container">
     <h1>My First Blog!</h1>
+    <p><a href="/articles/add/">Добавить Статью</a></p>
     {% for article in articles %}
         <h3>{{ article.pk }}. {{ article.title }}</h3>
         <p>{{ article.author }} | {{ article.created_at }}</p>
         <div>{{ article.text }}</div>
     {% endfor %}
-    <a href="/articles/add/">Добавить Статью</a>
+    <p><a href="/articles/add/">Добавить Статью</a></p>
 </div>
 </body>
 </html>

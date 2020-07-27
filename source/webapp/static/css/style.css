@@ -49,3 +49,9 @@ body {
     color: #ffc122;
     text-decoration: underline;
 }
+
+.error {
+    font-weight: bold;
+    color: red;
+    margin-top: 2px;
+}

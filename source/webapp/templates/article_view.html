@@ -2,6 +2,10 @@
 
 {% block title %}View{% endblock %}
 
+{% block menu %}
+    <li><a href="{% url 'article_update' article.pk %}">Update</a></li>
+{% endblock %}
+
 {% block content %}
     <h1>{{ article.title }}</h1>
     <p>{{ article.text }}</p>

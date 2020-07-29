@@ -4,6 +4,7 @@
 
 {% block menu %}
     <li><a href="{% url 'article_update' article.pk %}">Update</a></li>
+    <li><a href="{% url 'article_delete' article.pk %}">Delete</a></li>
 {% endblock %}
 
 {% block content %}

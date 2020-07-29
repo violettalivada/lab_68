@@ -9,5 +9,6 @@
         <p>Статус: ({{ article.status }} | {{ article.get_status_display }})</p>
         <p>{{ article.author }} | {{ article.created_at }}</p>
         <p><a href="{% url 'article_update' article.pk %}">Update</a></p>
+        <p><a href="{% url 'article_delete' article.pk %}">Delete</a></p>
     {% endfor %}
 {% endblock %}

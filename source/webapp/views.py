@@ -32,15 +32,15 @@ class ArticleView(TemplateView):
         return context
 
 
-def article_create_view(request):
-    if request.method == "GET":
+class ArticleCreateView(View):
+    def get(self, request):
         return render(request, 'article_create.html', context={
             'form': ArticleForm()
         })
-    elif request.method == 'POST':
+
+    def post(self, request):
         form = ArticleForm(data=request.POST)
         if form.is_valid():
-            # article = Article.objects.create(**form.cleaned_data)
             article = Article.objects.create(
                 title=form.cleaned_data['title'],
                 text=form.cleaned_data['text'],
@@ -53,8 +53,6 @@ def article_create_view(request):
             return render(request, 'article_create.html', context={
                 'form': form
             })
-    else:
-        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
 
 def article_update_view(request, pk):

@@ -1,20 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotAllowed
 from django.utils.timezone import make_naive
+from django.views import View
 
 from webapp.models import Article
 from webapp.forms import ArticleForm, BROWSER_DATETIME_FORMAT
 
 
-def index_view(request):
-    is_admin = request.GET.get('is_admin', None)
-    if is_admin:
-        data = Article.objects.all()
-    else:
-        data = Article.objects.filter(status='moderated')
-    return render(request, 'index.html', context={
-        'articles': data
-    })
+class IndexView(View):
+    def get(self, request):
+        is_admin = request.GET.get('is_admin', None)
+        if is_admin:
+            data = Article.objects.all()
+        else:
+            data = Article.objects.filter(status='moderated')
+        return render(request, 'index.html', context={
+            'articles': data
+        })
 
 
 def article_view(request, pk):

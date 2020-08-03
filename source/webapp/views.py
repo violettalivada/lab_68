@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotAllowed
 from django.utils.timezone import make_naive
-from django.views import View
+from django.views.generic import View, TemplateView
 
 from webapp.models import Article
 from webapp.forms import ArticleForm, BROWSER_DATETIME_FORMAT
@@ -19,16 +19,17 @@ class IndexView(View):
         })
 
 
-def article_view(request, pk):
-    # try:
-    #     article = Article.objects.get(pk=pk)
-    # except Article.DoesNotExist:
-    #     raise Http404
+class ArticleView(TemplateView):
+    template_name = 'article_view.html'
 
-    article = get_object_or_404(Article, pk=pk)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    context = {'article': article}
-    return render(request, 'article_view.html', context)
+        pk = self.kwargs.get('pk')
+        article = get_object_or_404(Article, pk=pk)
+
+        context['article'] = article
+        return context
 
 
 def article_create_view(request):

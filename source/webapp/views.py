@@ -55,28 +55,32 @@ class ArticleCreateView(View):
             })
 
 
-def article_update_view(request, pk):
-    article = get_object_or_404(Article, pk=pk)
-    if request.method == "GET":
+class ArticleUpdateView(TemplateView):
+    template_name = 'article_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        pk = self.kwargs.get('pk')
+        article = get_object_or_404(Article, pk=pk)
         form = ArticleForm(initial={
             'title': article.title,
             'text': article.text,
             'author': article.author,
             'status': article.status,
-            # форматирование перед выводом для DateTime.
-            'publish_at': make_naive(article.publish_at)\
+            'publish_at': make_naive(article.publish_at) \
                 .strftime(BROWSER_DATETIME_FORMAT)
-            # для дат выглядит просто как:
-            # 'publish_at': article.publish_at
         })
-        return render(request, 'article_update.html', context={
-            'form': form,
-            'article': article
-        })
-    elif request.method == 'POST':
+        context['article'] = article
+        context['form'] = form
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        article = get_object_or_404(Article, pk=pk)
         form = ArticleForm(data=request.POST)
         if form.is_valid():
-            # Article.objects.filter(pk=pk).update(**form.cleaned_data)
             article.title = form.cleaned_data['title']
             article.text = form.cleaned_data['text']
             article.author = form.cleaned_data['author']
@@ -85,12 +89,10 @@ def article_update_view(request, pk):
             article.save()
             return redirect('article_view', pk=article.pk)
         else:
-            return render(request, 'article_update.html', context={
+            return self.render_to_response({
                 'article': article,
                 'form': form
             })
-    else:
-        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
 
 def article_delete_view(request, pk):

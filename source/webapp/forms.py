@@ -1,5 +1,5 @@
 from django import forms
-from .models import STATUS_CHOICES, Article
+from .models import STATUS_CHOICES, Article, Tag
 
 default_status = STATUS_CHOICES[0][0]
 
@@ -19,6 +19,7 @@ class ArticleForm(forms.Form):
                                      widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
     # для полей типа DateField
     # publish_at = forms.DateField(..., widget=forms.DateInput(attrs={'type': 'date'}))
+    tags = forms.ModelMultipleChoiceField(required=False, label='Теги', queryset=Tag.objects.all())
 
 
 class CommentForm(forms.Form):

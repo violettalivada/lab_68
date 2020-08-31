@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -25,6 +27,7 @@ class IndexView(SearchView):
         return data
 
 
+@login_required
 def article_mass_action_view(request):
     if request.method == 'POST':
         ids = request.POST.getlist('selected_articles', [])
@@ -61,15 +64,15 @@ class ArticleView(DetailView):
             return comments, None, False
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = 'article/article_create.html'
     form_class = ArticleForm
     model = Article
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return super().dispatch(request, *args, **kwargs)
-        return redirect('login')
+    # def dispatch(self, request, *args, **kwargs):
+    #     if self.request.user.is_authenticated:
+    #         return super().dispatch(request, *args, **kwargs)
+    #     return redirect('login')
 
     def get_success_url(self):
         return reverse('article_view', kwargs={'pk': self.object.pk})

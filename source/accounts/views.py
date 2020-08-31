@@ -13,7 +13,7 @@ def login_view(request):
             return redirect('index')
         else:
             context['has_error'] = True
-    return render(request, 'login.html', context=context)
+    return render(request, 'registration/login.html', context=context)
 
 
 def logout_view(request):

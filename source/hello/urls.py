@@ -20,7 +20,9 @@ from webapp.views import IndexView, ArticleCreateView, ArticleView, \
     ArticleCommentCreateView, article_mass_action_view, \
     CommentUpdateView, CommentDeleteView
 
-from accounts.views import login_view, logout_view
+# from accounts.views import login_view, logout_view
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +38,6 @@ urlpatterns = [
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
 
-    path('accounts/login/', login_view, name='login'),
-    path('accounts/logout/', logout_view, name='logout')
+    path('accounts/login/', LoginView.as_view(), name='login'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout')
 ]

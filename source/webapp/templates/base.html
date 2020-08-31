@@ -19,8 +19,13 @@
         <div class="container">
             <ul class="menu">
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'article_create' %}">Add Article</a></li>
-                {% block menu %}{% endblock %}
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'article_create' %}">Add Article</a></li>
+                    {% block menu %}{% endblock %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
             </ul>
 
             {% block search %}

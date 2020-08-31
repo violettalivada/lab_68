@@ -66,6 +66,11 @@ class ArticleCreateView(CreateView):
     form_class = ArticleForm
     model = Article
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('login')
+
     def get_success_url(self):
         return reverse('article_view', kwargs={'pk': self.object.pk})
 

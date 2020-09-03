@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from webapp.views import IndexView, ArticleCreateView, ArticleView, \
     ArticleUpdateView, ArticleDeleteView, \
     ArticleCommentCreateView, article_mass_action_view, \
@@ -26,18 +26,20 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', IndexView.as_view(), name='index'),
-    path('article/<int:pk>/', ArticleView.as_view(), name='article_view'),
-    path('articles/add/', ArticleCreateView.as_view(), name='article_create'),
-    path('article/<int:pk>/update/', ArticleUpdateView.as_view(), name='article_update'),
-    path('article/<int:pk>/delete/', ArticleDeleteView.as_view(), name='article_delete'),
-    path('article/mass-action/', article_mass_action_view, name='article_mass_action'),
 
-    path('article/<int:pk>/comments/add/', ArticleCommentCreateView.as_view(),
-         name='article_comment_add'),
+    path('', IndexView.as_view(), name='index'),
+    path('article/', include([
+        path('<int:pk>/', ArticleView.as_view(), name='article_view'),
+        path('add/', ArticleCreateView.as_view(), name='article_create'),
+        path('<int:pk>/update/', ArticleUpdateView.as_view(), name='article_update'),
+        path('<int:pk>/delete/', ArticleDeleteView.as_view(), name='article_delete'),
+        path('mass-action/', article_mass_action_view, name='article_mass_action'),
+        path('<int:pk>/comments/add/', ArticleCommentCreateView.as_view(),
+             name='article_comment_add'),
+    ])),
+
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment_update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment_delete'),
 
-    path('accounts/login/', LoginView.as_view(), name='login'),
-    path('accounts/logout/', LogoutView.as_view(), name='logout')
+    path('accounts/', include('accounts.urls'))
 ]

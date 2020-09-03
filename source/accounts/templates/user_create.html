@@ -8,6 +8,5 @@
 
 {% block content %}
     <h1>Регистрация</h1>
-    {% url 'accounts:create' as action_url %}
-    {% include 'partial/form.html' with action_url=action_url form_method='post' button_text="Зарегистрироваться" %}
+    {% include 'partial/form.html' with form_method='post' button_text="Зарегистрироваться" %}
 {% endblock %}

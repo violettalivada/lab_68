@@ -22,9 +22,9 @@
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'article_create' %}">Add Article</a></li>
                     {% block menu %}{% endblock %}
-                    <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                    <li><a href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Logout</a></li>
                 {% else %}
-                    <li><a href="{% url 'accounts:login' %}">Login</a></li>
+                    <li><a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Login</a></li>
                 {% endif %}
             </ul>
 

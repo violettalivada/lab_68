@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
@@ -79,18 +79,11 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return reverse('article_view', kwargs={'pk': self.object.pk})
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'article/article_update.html'
     form_class = ArticleForm
     model = Article
-
-    def dispatch(self, request, *args, **kwargs):
-        user = request.user
-        if not user.is_authenticated:
-            return redirect('accounts:login')
-        if not user.has_perm('webapp.change_article'):
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+    permission_required = 'webapp.change_article'
 
     def get_initial(self):
         return {'publish_at': make_naive(self.object.publish_at)\
@@ -100,7 +93,8 @@ class ArticleUpdateView(UpdateView):
         return reverse('article_view', kwargs={'pk': self.object.pk})
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'article/article_delete.html'
     model = Article
     success_url = reverse_lazy('index')
+    permission_required = 'webapp.delete_article'

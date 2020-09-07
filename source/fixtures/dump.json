@@ -5,7 +5,7 @@
   "fields": {
     "title": "Another Title",
     "text": "Long-long-long text",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T15:14:26.872Z",
     "updated_at": "2020-08-07T14:57:52.361Z",
@@ -22,7 +22,7 @@
   "fields": {
     "title": "New Title 0",
     "text": "New Text 0",
-    "author": "Unknown",
+    "author": 1,
     "status": "rejected",
     "created_at": "2020-07-20T14:58:26.764Z",
     "updated_at": "2020-07-20T14:58:26.764Z",
@@ -36,7 +36,7 @@
   "fields": {
     "title": "New Title 1",
     "text": "New Text 1",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.788Z",
     "updated_at": "2020-07-20T14:58:26.788Z",
@@ -50,7 +50,7 @@
   "fields": {
     "title": "New Title 2",
     "text": "New Text 2",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.809Z",
     "updated_at": "2020-07-20T14:58:26.809Z",
@@ -64,7 +64,7 @@
   "fields": {
     "title": "",
     "text": "",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.828Z",
     "updated_at": "2020-07-28T14:09:26.484Z",
@@ -78,7 +78,7 @@
   "fields": {
     "title": "New Title 4",
     "text": "New Text 4",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.846Z",
     "updated_at": "2020-07-20T14:58:26.846Z",
@@ -92,7 +92,7 @@
   "fields": {
     "title": "New Title 6",
     "text": "New Text 6",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.890Z",
     "updated_at": "2020-07-20T14:58:26.890Z",
@@ -106,7 +106,7 @@
   "fields": {
     "title": "New Title 7",
     "text": "New Text 7",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.908Z",
     "updated_at": "2020-07-20T14:58:26.909Z",
@@ -120,7 +120,7 @@
   "fields": {
     "title": "New Title 10",
     "text": "New Text 10",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-20T14:58:26.946Z",
     "updated_at": "2020-07-20T15:30:13.734Z",
@@ -134,7 +134,7 @@
   "fields": {
     "title": "Test",
     "text": "Long long long text",
-    "author": "Unknown",
+    "author": 1,
     "status": "rejected",
     "created_at": "2020-07-20T15:31:22.039Z",
     "updated_at": "2020-07-20T15:31:22.039Z",
@@ -148,7 +148,7 @@
   "fields": {
     "title": "Title",
     "text": "Text",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-22T13:43:19.477Z",
     "updated_at": "2020-07-22T13:43:19.477Z",
@@ -162,7 +162,7 @@
   "fields": {
     "title": "\u043d\u0435\u043f\u0433\u0440ased",
     "text": "\u0443\u043a\u0432\u0430\u0435\u043c\u043f\u043d\u0438\u0440\u0433\u043easd",
-    "author": "Unknown",
+    "author": 1,
     "status": "rejected",
     "created_at": "2020-07-27T15:29:49.428Z",
     "updated_at": "2020-08-03T15:37:07.067Z",
@@ -176,7 +176,7 @@
   "fields": {
     "title": "",
     "text": "",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-07-28T14:10:36.388Z",
     "updated_at": "2020-07-28T14:10:36.388Z",
@@ -190,7 +190,7 @@
   "fields": {
     "title": "Title 2",
     "text": "Text 2",
-    "author": "Unknown",
+    "author": 1,
     "status": "moderated",
     "created_at": "2020-07-28T15:27:22.614Z",
     "updated_at": "2020-08-04T15:21:43.867Z",
@@ -206,7 +206,7 @@
   "fields": {
     "title": "Admin",
     "text": "Hello!",
-    "author": "Unknown",
+    "author": 1,
     "status": "moderated",
     "created_at": "2020-07-29T14:56:15.250Z",
     "updated_at": "2020-07-29T15:04:25.165Z",
@@ -220,7 +220,7 @@
   "fields": {
     "title": "Test",
     "text": "Test",
-    "author": "Unknown",
+    "author": 1,
     "status": "moderated",
     "created_at": "2020-07-29T15:05:14.325Z",
     "updated_at": "2020-07-29T15:05:14.325Z",
@@ -234,7 +234,7 @@
   "fields": {
     "title": "ytghjk",
     "text": "ouhjkl",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-03T15:24:56.411Z",
     "updated_at": "2020-08-03T15:24:56.412Z",
@@ -248,7 +248,7 @@
   "fields": {
     "title": "jgvigoy8ui",
     "text": "rdtfvhbjnk",
-    "author": "Unknown",
+    "author": 1,
     "status": "moderated",
     "created_at": "2020-08-04T14:57:37.415Z",
     "updated_at": "2020-08-06T14:54:05.908Z",
@@ -262,7 +262,7 @@
   "fields": {
     "title": "sddad",
     "text": "asdasd",
-    "author": "Unknown",
+    "author": 1,
     "status": "moderated",
     "created_at": "2020-08-06T15:20:59.114Z",
     "updated_at": "2020-08-06T15:20:59.114Z",
@@ -278,7 +278,7 @@
   "fields": {
     "title": "huojik",
     "text": "asdikl\r\nasdad\r\nadadsasd\r\nadasd",
-    "author": "Unknown",
+    "author": 1,
     "status": "moderated",
     "created_at": "2020-08-07T15:38:34.442Z",
     "updated_at": "2020-08-07T16:00:51.622Z",
@@ -288,28 +288,11 @@
 },
 {
   "model": "webapp.article",
-  "pk": 36,
-  "fields": {
-    "title": "Test",
-    "text": "Test",
-    "author": "Unknown",
-    "status": "moderated",
-    "created_at": "2020-08-08T13:19:33.787Z",
-    "updated_at": "2020-08-08T13:27:56.124Z",
-    "publish_at": "2020-08-08T13:19:00Z",
-    "tags": [
-      2,
-      3
-    ]
-  }
-},
-{
-  "model": "webapp.article",
   "pk": 37,
   "fields": {
     "title": "huiygtif6udtiygujkl",
     "text": "nj;gfty8uok",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-10T13:43:21.700Z",
     "updated_at": "2020-08-10T13:43:21.700Z",
@@ -326,7 +309,7 @@
   "fields": {
     "title": "Test tes test",
     "text": "test",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-12T13:41:13.592Z",
     "updated_at": "2020-08-12T13:41:29.344Z",
@@ -340,7 +323,7 @@
   "fields": {
     "title": "sasdasdasdasd",
     "text": "asdasdq",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-12T14:32:03.199Z",
     "updated_at": "2020-08-12T14:32:03.199Z",
@@ -354,7 +337,7 @@
   "fields": {
     "title": "testtesttest",
     "text": "test",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-15T15:45:43.796Z",
     "updated_at": "2020-08-15T15:45:43.796Z",
@@ -371,7 +354,7 @@
   "fields": {
     "title": "Test Test Test",
     "text": "Test Test",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-20T14:47:09.700Z",
     "updated_at": "2020-08-20T14:47:09.700Z",
@@ -388,11 +371,28 @@
   "fields": {
     "title": "Test test test",
     "text": "test",
-    "author": "Unknown",
+    "author": 1,
     "status": "new",
     "created_at": "2020-08-20T15:23:45.419Z",
     "updated_at": "2020-08-20T15:23:45.419Z",
     "publish_at": "2020-08-20T15:23:45.418Z",
+    "tags": [
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "webapp.article",
+  "pk": 45,
+  "fields": {
+    "title": "This a long long article",
+    "text": "Test\r\ntest\r\ntest\r\ntest",
+    "author": 2,
+    "status": "moderated",
+    "created_at": "2020-09-07T15:07:05.508Z",
+    "updated_at": "2020-09-07T15:07:05.508Z",
+    "publish_at": "2020-09-07T15:00:00Z",
     "tags": [
       2,
       3
@@ -405,7 +405,7 @@
   "fields": {
     "article": 27,
     "text": "hb;jkl\r\nipygbhlk",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T13:51:44.190Z",
     "updated_at": "2020-08-04T13:51:44.190Z"
   }
@@ -416,7 +416,7 @@
   "fields": {
     "article": 27,
     "text": "bvguhijl\r\nljkhgicfurdf7\r\njnhgyt",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T13:51:57.619Z",
     "updated_at": "2020-08-04T13:51:57.619Z"
   }
@@ -427,7 +427,7 @@
   "fields": {
     "article": 29,
     "text": "vugftyt8p7oi\r\nljbkit87y9\r\nkjbhyiuo",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T13:52:23.744Z",
     "updated_at": "2020-08-04T13:52:23.744Z"
   }
@@ -438,7 +438,7 @@
   "fields": {
     "article": 30,
     "text": "90iuhiybjnjbh0\r\ni90uhgbiyhjbh\r\nhui",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T13:52:40.762Z",
     "updated_at": "2020-08-04T13:52:40.762Z"
   }
@@ -449,7 +449,7 @@
   "fields": {
     "article": 31,
     "text": "bjhgiuo\r\njkihu\r\njkhy",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T13:52:53.310Z",
     "updated_at": "2020-08-04T13:52:53.310Z"
   }
@@ -460,7 +460,7 @@
   "fields": {
     "article": 31,
     "text": "text",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T14:20:18.257Z",
     "updated_at": "2020-08-04T14:20:18.257Z"
   }
@@ -471,7 +471,7 @@
   "fields": {
     "article": 31,
     "text": "\u0444\u0432\u044b\u0444\u0432",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-04T14:23:10.287Z",
     "updated_at": "2020-08-04T14:23:10.287Z"
   }
@@ -482,7 +482,7 @@
   "fields": {
     "article": 43,
     "text": "Test",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:11:34.881Z",
     "updated_at": "2020-08-20T15:11:34.881Z"
   }
@@ -493,7 +493,7 @@
   "fields": {
     "article": 43,
     "text": "Test 2",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:11:40.734Z",
     "updated_at": "2020-08-20T15:11:40.734Z"
   }
@@ -504,7 +504,7 @@
   "fields": {
     "article": 44,
     "text": "Test",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:23:49.327Z",
     "updated_at": "2020-08-20T15:23:49.327Z"
   }
@@ -515,7 +515,7 @@
   "fields": {
     "article": 44,
     "text": "Test 2",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:23:52.674Z",
     "updated_at": "2020-08-20T15:23:52.674Z"
   }
@@ -526,7 +526,7 @@
   "fields": {
     "article": 44,
     "text": "Test 3",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:23:55.850Z",
     "updated_at": "2020-08-20T15:23:55.850Z"
   }
@@ -537,7 +537,7 @@
   "fields": {
     "article": 44,
     "text": "Test",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:57:03.616Z",
     "updated_at": "2020-08-20T15:57:03.616Z"
   }
@@ -548,9 +548,31 @@
   "fields": {
     "article": 44,
     "text": "Test",
-    "author": "\u0410\u043d\u043e\u043d\u0438\u043c",
+    "author": 1,
     "created_at": "2020-08-20T15:57:28.814Z",
     "updated_at": "2020-08-20T15:57:28.814Z"
+  }
+},
+{
+  "model": "webapp.comment",
+  "pk": 16,
+  "fields": {
+    "article": 35,
+    "text": "Test",
+    "author": 1,
+    "created_at": "2020-09-07T14:43:45.212Z",
+    "updated_at": "2020-09-07T14:43:45.212Z"
+  }
+},
+{
+  "model": "webapp.comment",
+  "pk": 18,
+  "fields": {
+    "article": 45,
+    "text": "Test test test test",
+    "author": 2,
+    "created_at": "2020-09-07T15:26:18.469Z",
+    "updated_at": "2020-09-07T15:26:18.469Z"
   }
 },
 {

@@ -22,8 +22,12 @@
                 <p>Статус: ({{ article.status }} | {{ article.get_status_display }})</p>
                 <p>{{ article.author }} | {{ article.created_at|date:"d.m.Y H:i:s" }}</p>
                 <p>Published at: {{ article.publish_at|date:"d.m.Y H:i:s" }}</p>
-                <p><a href="{% url 'article_update' article.pk %}">Update</a></p>
-                <p><a href="{% url 'article_delete' article.pk %}">Delete</a></p>
+                {% if perms.webapp.change_article %}
+                    <p><a href="{% url 'article_update' article.pk %}">Update</a></p>
+                {% endif %}
+                {% if perms.webapp.delete_article %}
+                    <p><a href="{% url 'article_delete' article.pk %}">Delete</a></p>
+                {% endif %}
             </div>
         {% endfor %}
     </form>

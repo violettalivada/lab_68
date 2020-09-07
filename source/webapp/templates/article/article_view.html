@@ -3,8 +3,12 @@
 {% block title %}View{% endblock %}
 
 {% block menu %}
-    <li><a href="{% url 'article_update' article.pk %}">Update</a></li>
-    <li><a href="{% url 'article_delete' article.pk %}">Delete</a></li>
+    {% if perms.webapp.change_article %}
+        <li><a href="{% url 'article_update' article.pk %}">Update</a></li>
+    {% endif %}
+    {% if perms.webapp.delete_article %}
+        <li><a href="{% url 'article_delete' article.pk %}">Delete</a></li>
+    {% endif %}
     <li><a href="{% url 'article_comment_add' article.pk %}">Add Comment</a></li>
 {% endblock %}
 
@@ -24,8 +28,12 @@
             <div class="box">
                 <h4>{{ comment.author }} ({{ comment.created_at }})</h4>
                 <div class="pre">{{ comment.text }}</div>
-                <p><a href="{% url 'comment_update' comment.pk %}">Update</a></p>
-                <p><a href="{% url 'comment_delete' comment.pk %}">Delete</a></p>
+                {% if perms.webapp.change_comment %}
+                    <p><a href="{% url 'comment_update' comment.pk %}">Update</a></p>
+                {% endif %}
+                {% if perms.webapp.delete_comment %}
+                    <p><a href="{% url 'comment_delete' comment.pk %}">Delete</a></p>
+                {% endif %}
             </div>
         {% empty %}
             <p>Нет комментариев</p>

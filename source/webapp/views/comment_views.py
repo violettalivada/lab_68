@@ -28,6 +28,10 @@ class CommentUpdateView(PermissionRequiredMixin, UpdateView):
     form_class = ArticleCommentForm
     permission_required = 'webapp.change_comment'
 
+    def has_permission(self):
+        comment = self.get_object()
+        return super().has_permission() or comment.author == self.request.user
+
     def get_success_url(self):
         return reverse('article_view', kwargs={'pk': self.object.article.pk})
 
@@ -38,6 +42,10 @@ class CommentDeleteView(PermissionRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
+
+    def has_permission(self):
+        comment = self.get_object()
+        return super().has_permission() or comment.author == self.request.user
 
     def get_success_url(self):
         return reverse('article_view', kwargs={'pk': self.object.article.pk})

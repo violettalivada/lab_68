@@ -3,10 +3,10 @@
 {% block title %}View{% endblock %}
 
 {% block menu %}
-    {% if perms.webapp.change_article %}
+    {% if perms.webapp.change_article or article.author == request.user %}
         <li><a href="{% url 'article_update' article.pk %}">Update</a></li>
     {% endif %}
-    {% if perms.webapp.delete_article %}
+    {% if perms.webapp.delete_article or article.author == request.user %}
         <li><a href="{% url 'article_delete' article.pk %}">Delete</a></li>
     {% endif %}
     <li><a href="{% url 'article_comment_add' article.pk %}">Add Comment</a></li>
@@ -28,10 +28,10 @@
             <div class="box">
                 <h4>{{ comment.author }} ({{ comment.created_at }})</h4>
                 <div class="pre">{{ comment.text }}</div>
-                {% if perms.webapp.change_comment %}
+                {% if perms.webapp.change_comment or comment.author == request.user %}
                     <p><a href="{% url 'comment_update' comment.pk %}">Update</a></p>
                 {% endif %}
-                {% if perms.webapp.delete_comment %}
+                {% if perms.webapp.delete_comment or comment.author == request.user %}
                     <p><a href="{% url 'comment_delete' comment.pk %}">Delete</a></p>
                 {% endif %}
             </div>

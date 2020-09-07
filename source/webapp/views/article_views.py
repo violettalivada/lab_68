@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, \
+    UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
@@ -84,6 +85,10 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     model = Article
     permission_required = 'webapp.change_article'
 
+    def has_permission(self):
+        article = self.get_object()
+        return super().has_permission() or article.author == self.request.user
+
     def get_initial(self):
         return {'publish_at': make_naive(self.object.publish_at)\
             .strftime(BROWSER_DATETIME_FORMAT)}
@@ -92,8 +97,11 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
         return reverse('article_view', kwargs={'pk': self.object.pk})
 
 
-class ArticleDeleteView(PermissionRequiredMixin, DeleteView):
+class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'article/article_delete.html'
     model = Article
     success_url = reverse_lazy('index')
-    permission_required = 'webapp.delete_article'
+
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_article') or \
+            self.get_object().author == self.request.user

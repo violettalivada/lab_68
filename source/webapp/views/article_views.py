@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -83,11 +84,13 @@ class ArticleUpdateView(UpdateView):
     form_class = ArticleForm
     model = Article
 
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs['initial'] = {'publish_at': make_naive(self.object.publish_at)\
-    #         .strftime(BROWSER_DATETIME_FORMAT)}
-    #     return kwargs
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if not user.is_authenticated:
+            return redirect('accounts:login')
+        if not user.has_perm('webapp.change_article'):
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
 
     def get_initial(self):
         return {'publish_at': make_naive(self.object.publish_at)\

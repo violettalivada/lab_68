@@ -70,10 +70,9 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     model = Article
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if self.request.user.is_authenticated:
-    #         return super().dispatch(request, *args, **kwargs)
-    #     return redirect('login')
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('article_view', kwargs={'pk': self.object.pk})

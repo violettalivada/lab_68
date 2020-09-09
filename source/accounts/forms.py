@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from .models import AuthToken
 from django.conf import settings
@@ -11,7 +12,7 @@ class MyUserCreationForm(UserCreationForm):
 
     def save(self, commit=True):
         if settings.ACTIVATE_USERS_EMAIL:
-            user = super().save(commit=False)
+            user: AbstractUser = super().save(commit=False)
             user.is_active = False
             if commit:
                 user.save()

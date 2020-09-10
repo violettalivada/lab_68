@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.views.generic import CreateView, View
 from django.conf import settings
+from django.views.generic import DetailView
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.forms import MyUserCreationForm
 from .models import AuthToken
@@ -61,3 +64,9 @@ class RegisterActivateView(View):
                 login(request, user)
             token.delete()
         return redirect('index')
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = get_user_model()
+    template_name = 'user_detail.html'
+    context_object_name = 'user_obj'

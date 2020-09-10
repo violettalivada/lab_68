@@ -9,7 +9,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.forms import MyUserCreationForm
-from .models import AuthToken
+from .models import AuthToken, Profile
 
 
 # def login_view(request):
@@ -58,12 +58,16 @@ class RegisterActivateView(View):
         token = AuthToken.get_token(self.kwargs.get('token'))
         if token:
             if token.is_alive():
-                user = token.user
-                user.is_active = True
-                user.save()
-                login(request, user)
+                self.activate_user(token)
             token.delete()
         return redirect('index')
+
+    def activate_user(self, token):
+        user = token.user
+        user.is_active = True
+        user.save()
+        Profile.objects.create(user=user)
+        login(self.request, user)
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):

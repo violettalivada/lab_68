@@ -26,6 +26,8 @@
                 <p><a href="{% url 'article_delete' article.pk %}">Delete</a></p>
             {% endif %}
         </div>
+    {% empty %}
+        <h2 class="text-center">Нет статей</h2>
     {% endfor %}
 </form>
 

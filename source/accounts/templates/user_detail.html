@@ -19,5 +19,5 @@
     <p>Почта: {{ user_obj.email }}</p>
 
     <h2 class="text-center clear">Статьи автора:</h2>
-    {% include 'partial/article_list.html' with articles=user_obj.articles.all %}
+    {% include 'partial/article_list.html' %}
 {% endblock %}

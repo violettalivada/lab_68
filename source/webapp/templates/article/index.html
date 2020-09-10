@@ -20,7 +20,10 @@
                            id="selected_articles-{{ article.pk }}" value="{{ article.pk }}">
                 </p>
                 <p>Статус: ({{ article.status }} | {{ article.get_status_display }})</p>
-                <p>{{ article.author }} | {{ article.created_at|date:"d.m.Y H:i:s" }}</p>
+                <p>
+                    <a href="{% url 'accounts:detail' article.author_id %}">{{ article.author }}</a>
+                    | {{ article.created_at|date:"d.m.Y H:i:s" }}
+                </p>
                 <p>Published at: {{ article.publish_at|date:"d.m.Y H:i:s" }}</p>
                 {% if perms.webapp.change_article or article.author == request.user %}
                     <p><a href="{% url 'article_update' article.pk %}">Update</a></p>

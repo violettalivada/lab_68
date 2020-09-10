@@ -12,8 +12,12 @@
     {% if user_obj.profile.avatar %}
         <img class="avatar" src="{{ user_obj.profile.avatar.url }}" width="250" height="250" alt="user picture">
     {% endif %}
+    <p>Имя пользователя: {{ user_obj.username }}</p>
     <p>Имя: {{ user_obj.first_name }}</p>
     <p>Фамилия: {{ user_obj.last_name }}</p>
     <p>Дата рождения: {{ user_obj.profile.birth_date|date:'d.m.Y' }}</p>
     <p>Почта: {{ user_obj.email }}</p>
+
+    <h2 class="text-center clear">Статьи автора:</h2>
+    {% include 'partial/article_list.html' with articles=user_obj.articles.all %}
 {% endblock %}

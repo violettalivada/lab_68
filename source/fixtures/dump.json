@@ -1,19 +1,83 @@
 [
 {
-  "model": "webapp.article",
+  "model": "accounts.profile",
   "pk": 1,
   "fields": {
-    "title": "Another Title",
-    "text": "Long-long-long text",
-    "author": 1,
-    "status": "new",
-    "created_at": "2020-07-20T15:14:26.872Z",
-    "updated_at": "2020-08-07T14:57:52.361Z",
-    "publish_at": "2020-07-29T14:43:02Z",
-    "tags": [
-      1,
-      2
-    ]
+    "user": 1,
+    "birth_date": "2020-09-10",
+    "avatar": "user_pics/photo_2019-06-03_18-49-30_rir4wQ4.jpg"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 2,
+  "fields": {
+    "user": 4,
+    "birth_date": "2020-09-10",
+    "avatar": "user_pics/cat_2.png"
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 3,
+  "fields": {
+    "user": 2,
+    "birth_date": "2020-01-01",
+    "avatar": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 4,
+  "fields": {
+    "user": 8,
+    "birth_date": null,
+    "avatar": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 5,
+  "fields": {
+    "user": 9,
+    "birth_date": null,
+    "avatar": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 6,
+  "fields": {
+    "user": 10,
+    "birth_date": null,
+    "avatar": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 7,
+  "fields": {
+    "user": 11,
+    "birth_date": null,
+    "avatar": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 8,
+  "fields": {
+    "user": 12,
+    "birth_date": null,
+    "avatar": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 9,
+  "fields": {
+    "user": 13,
+    "birth_date": null,
+    "avatar": ""
   }
 },
 {
@@ -397,6 +461,34 @@
       2,
       3
     ]
+  }
+},
+{
+  "model": "webapp.article",
+  "pk": 46,
+  "fields": {
+    "title": "test test test",
+    "text": "test",
+    "author": 1,
+    "status": "new",
+    "created_at": "2020-09-10T07:01:13.903Z",
+    "updated_at": "2020-09-10T07:01:13.903Z",
+    "publish_at": "2020-09-10T07:00:41Z",
+    "tags": []
+  }
+},
+{
+  "model": "webapp.article",
+  "pk": 47,
+  "fields": {
+    "title": "test test test",
+    "text": "test",
+    "author": 1,
+    "status": "new",
+    "created_at": "2020-09-10T07:01:27.650Z",
+    "updated_at": "2020-09-10T07:01:40.602Z",
+    "publish_at": "2020-09-10T07:01:13Z",
+    "tags": []
   }
 },
 {

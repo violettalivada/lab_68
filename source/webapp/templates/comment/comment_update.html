@@ -5,6 +5,6 @@
 {% block content %}
     <h1>Update Comment</h1>
 
-    {% url 'comment_update' comment.pk as action_url %}
+    {% url 'webapp:comment_update' comment.pk as action_url %}
     {% include 'partial/form.html' with form_method='post' action_url=action_url %}
 {% endblock %}

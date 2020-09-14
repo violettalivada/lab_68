@@ -3,16 +3,16 @@
 {% block title %}Delete{% endblock %}
 
 {% block menu %}
-    <li><a href="{% url 'article_view' article.pk %}">Отмена</a></li>
+    <li><a href="{% url 'webapp:article_view' article.pk %}">Отмена</a></li>
 {% endblock %}
 
 {% block content %}
     <h1>Вы уверены, что хотите удалить статью "{{ article.title }}"?</h1>
     <p>By: {{ article.author }} | {{ article.created_at }}</p>
-    <form action="{% url "article_delete" article.pk %}" method="post">
+    <form action="{% url "webapp:article_delete" article.pk %}" method="post">
         {% csrf_token %}
         <p><input type="submit" value="Да"></p>
-        <p><a href="{% url 'article_view' article.pk %}">Отмена</a></p>
+        <p><a href="{% url 'webapp:article_view' article.pk %}">Отмена</a></p>
     </form>
     <h3>Содержимое статьи: </h3>
     <p>{{ article.text }}</p>

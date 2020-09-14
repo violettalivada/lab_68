@@ -5,6 +5,6 @@
 {% block content %}
     <h1>Create Article</h1>
 
-    {% url "article_create" as action_url %}
+    {% url "webapp:article_create" as action_url %}
     {% include 'partial/form.html' with action_url=action_url form_method='post' %}
 {% endblock %}

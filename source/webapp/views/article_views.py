@@ -35,7 +35,7 @@ def article_mass_action_view(request):
         ids = request.POST.getlist('selected_articles', [])
         if 'delete' in request.POST:
             Article.objects.filter(id__in=ids).delete()
-    return redirect('index')
+    return redirect('webapp:index')
 
 
 class ArticleView(DetailView):
@@ -76,7 +76,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('article_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
 
 
 class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
@@ -94,13 +94,13 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
             .strftime(BROWSER_DATETIME_FORMAT)}
 
     def get_success_url(self):
-        return reverse('article_view', kwargs={'pk': self.object.pk})
+        return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
 
 
 class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'article/article_delete.html'
     model = Article
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('webapp:index')
 
     def test_func(self):
         return self.request.user.has_perm('webapp.delete_article') or \

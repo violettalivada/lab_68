@@ -19,7 +19,7 @@ class ArticleCommentCreateView(LoginRequiredMixin, CreateView):
         comment.author = self.request.user
         comment.save()
         # form.save_m2m()  ## для сохранения связей многие-ко-многим
-        return redirect('article_view', pk=article.pk)
+        return redirect('webapp:article_view', pk=article.pk)
 
 
 class CommentUpdateView(PermissionRequiredMixin, UpdateView):
@@ -33,7 +33,7 @@ class CommentUpdateView(PermissionRequiredMixin, UpdateView):
         return super().has_permission() or comment.author == self.request.user
 
     def get_success_url(self):
-        return reverse('article_view', kwargs={'pk': self.object.article.pk})
+        return reverse('webapp:article_view', kwargs={'pk': self.object.article.pk})
 
 
 class CommentDeleteView(PermissionRequiredMixin, DeleteView):
@@ -48,4 +48,4 @@ class CommentDeleteView(PermissionRequiredMixin, DeleteView):
         return super().has_permission() or comment.author == self.request.user
 
     def get_success_url(self):
-        return reverse('article_view', kwargs={'pk': self.object.article.pk})
+        return reverse('webapp:article_view', kwargs={'pk': self.object.article.pk})

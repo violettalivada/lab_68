@@ -2,12 +2,12 @@
     {% include 'partial/pagination.html' %}
 {% endif %}
 
-<form action="{% url "article_mass_action" %}" method="post">
+<form action="{% url "webapp:article_mass_action" %}" method="post">
     {% csrf_token %}
     <p class="mass-actions"><input type="submit" name="delete" value="Delete selected"></p>
     {% for article in articles %}
         <div class="box">
-            <h3><a href="{% url "article_view" article.pk %}">{{ article.title }}</a></h3>
+            <h3><a href="{% url "webapp:article_view" article.pk %}">{{ article.title }}</a></h3>
             <p>
                 <label for="selected_articles-{{ article.pk }}">Select:</label>
                 <input type="checkbox" name="selected_articles"
@@ -20,10 +20,10 @@
             </p>
             <p>Published at: {{ article.publish_at|date:"d.m.Y H:i:s" }}</p>
             {% if perms.webapp.change_article or article.author == request.user %}
-                <p><a href="{% url 'article_update' article.pk %}">Update</a></p>
+                <p><a href="{% url 'webapp:article_update' article.pk %}">Update</a></p>
             {% endif %}
             {% if perms.webapp.delete_article or article.author == request.user %}
-                <p><a href="{% url 'article_delete' article.pk %}">Delete</a></p>
+                <p><a href="{% url 'webapp:article_delete' article.pk %}">Delete</a></p>
             {% endif %}
         </div>
     {% empty %}

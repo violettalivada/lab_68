@@ -21,7 +21,7 @@ from .models import AuthToken, Profile
 #         user = authenticate(request, username=username, password=password)
 #         if user is not None:
 #             login(request, user)
-#             return redirect('index')
+#             return redirect('webapp:index')
 #         else:
 #             context['has_error'] = True
 #     return render(request, 'registration/login.html', context=context)
@@ -29,7 +29,7 @@ from .models import AuthToken, Profile
 # 
 # def logout_view(request):
 #     logout(request)
-#     return redirect('index')
+#     return redirect('webapp:index')
 
 
 class RegisterView(CreateView):
@@ -40,7 +40,7 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         user = form.save()
         if settings.ACTIVATE_USERS_EMAIL:
-            return redirect('index')
+            return redirect('webapp:index')
         else:
             login(self.request, user)
             return redirect(self.get_success_url())
@@ -50,7 +50,7 @@ class RegisterView(CreateView):
         if not next_url:
             next_url = self.request.POST.get('next')
         if not next_url:
-            next_url = reverse('index')
+            next_url = reverse('webapp:index')
         return next_url
 
 
@@ -61,7 +61,7 @@ class RegisterActivateView(View):
             if token.is_alive():
                 self.activate_user(token)
             token.delete()
-        return redirect('index')
+        return redirect('webapp:index')
 
     def activate_user(self, token):
         user = token.user

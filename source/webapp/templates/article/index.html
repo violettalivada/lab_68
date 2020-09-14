@@ -4,5 +4,6 @@
 
 {% block content %}
     <h1>My First Blog!</h1>
-    {% include 'partial/article_list.html' %}
+    {# на главной показываем массовое удаление только модераторам и админу #}
+    {% include 'partial/article_list.html' with show_mass_delete=perms.webapp.delete_article %}
 {% endblock %}

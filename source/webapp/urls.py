@@ -1,7 +1,7 @@
 from django.urls import path, include
 from webapp.views import IndexView, ArticleCreateView, ArticleView, \
     ArticleUpdateView, ArticleDeleteView, \
-    ArticleCommentCreateView, article_mass_action_view, \
+    ArticleCommentCreateView, ArticleMassActionView, \
     CommentUpdateView, CommentDeleteView
 
 app_name = 'webapp'
@@ -19,7 +19,7 @@ urlpatterns = [
         ])),
 
         path('add/', ArticleCreateView.as_view(), name='article_create'),
-        path('mass-action/', article_mass_action_view, name='article_mass_action'),
+        path('mass-action/', ArticleMassActionView.as_view(), name='article_mass_action'),
     ])),
 
     path('comment/', include([

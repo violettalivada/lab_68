@@ -1,12 +1,10 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, \
     UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.timezone import make_naive
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import View, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.models import Article
 from webapp.forms import ArticleForm, BROWSER_DATETIME_FORMAT
@@ -29,13 +27,43 @@ class IndexView(SearchView):
         return data
 
 
-@login_required
-def article_mass_action_view(request):
-    if request.method == 'POST':
-        ids = request.POST.getlist('selected_articles', [])
-        if 'delete' in request.POST:
-            Article.objects.filter(id__in=ids).delete()
-    return redirect('webapp:index')
+class ArticleMassActionView(PermissionRequiredMixin, View):
+    redirect_url = 'webapp:index'
+    permission_required = 'webapp.delete_article'
+    queryset = None  # изначально queryset = None
+
+    def has_permission(self):
+        if super().has_permission():
+            return True  # админы и модеры могут удалять
+        articles = self.get_queryset()
+        author_ids = articles.values('author_id')
+        for item in author_ids:
+            if item['author_id'] != self.request.user.pk:
+                return False  # остальные могут удалять, только если среди выбранных статей
+        return True           # нет чужих статей
+
+    # метод 'post' проверяет наличие ключа 'delete' в запросе,
+    # и тогда удаляет
+    def post(self, request, *args, **kwargs):
+        if 'delete' in self.request.POST:
+            return self.delete(request, *args, **kwargs)
+        return redirect(self.redirect_url)
+
+    # метод 'delete' не проверяет наличие ключа 'delete' в запросе,
+    # и все равно удаляет
+    def delete(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        queryset.delete()
+        return redirect(self.redirect_url)
+
+    # "кэширующий" метод.
+    # при первом доступе к свойству queryset находит и сохраняет его в self.queryset
+    # при повторном доступе не ищет, возвращает сохранённое значение.
+    def get_queryset(self):
+        if self.queryset is None:
+            ids = self.request.POST.getlist('selected_articles', [])
+            self.queryset = self.get_queryset().filter(id__in=ids)
+        return self.queryset
 
 
 class ArticleView(DetailView):

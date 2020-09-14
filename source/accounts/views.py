@@ -86,4 +86,6 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         kwargs['page_obj'] = page
         kwargs['articles'] = page.object_list
         kwargs['is_paginated'] = page.has_other_pages()
+        if self.object == self.request.user:   # на странице пользователя показываем
+            kwargs['show_mass_delete'] = True  # массовое удаление только владельцу
         return super().get_context_data(**kwargs)

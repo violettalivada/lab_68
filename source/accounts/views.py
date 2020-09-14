@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.generic import View, DetailView, CreateView, UpdateView
 from django.conf import settings
 
-from accounts.forms import MyUserCreationForm, UserChangeForm, ProfileChangeForm
+from accounts.forms import MyUserCreationForm, UserChangeForm, ProfileChangeForm, PasswordChangeForm
 from .models import AuthToken, Profile
 
 
@@ -135,3 +135,13 @@ class UserChangeView(UpdateView):
         # else:
         #     form = ProfileChangeForm(instance=self.object)
         # return form
+
+
+class UserPasswordChangeView(UpdateView):
+    model = get_user_model()
+    template_name = 'user_password_change.html'
+    form_class = PasswordChangeForm
+    context_object_name = 'user_obj'
+
+    def get_success_url(self):
+        return reverse('accounts:login')

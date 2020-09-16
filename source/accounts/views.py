@@ -1,6 +1,6 @@
-from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.contrib.auth import get_user_model, authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -90,11 +90,14 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         return super().get_context_data(**kwargs)
 
 
-class UserChangeView(UpdateView):
+class UserChangeView(UserPassesTestMixin, UpdateView):
     model = get_user_model()
     form_class = UserChangeForm
     template_name = 'user_change.html'
     context_object_name = 'user_obj'
+
+    def test_func(self):
+        return self.request.user == self.get_object()
 
     def get_context_data(self, **kwargs):
         if 'profile_form' not in kwargs:
@@ -137,11 +140,19 @@ class UserChangeView(UpdateView):
         # return form
 
 
-class UserPasswordChangeView(UpdateView):
+class UserPasswordChangeView(UserPassesTestMixin, UpdateView):
     model = get_user_model()
     template_name = 'user_password_change.html'
     form_class = PasswordChangeForm
     context_object_name = 'user_obj'
 
+    def test_func(self):
+        return self.request.user == self.get_object()
+
+    def form_valid(self, form):
+        user = form.save()
+        update_session_auth_hash(self.request, user)
+        return HttpResponseRedirect(self.get_success_url())
+
     def get_success_url(self):
-        return reverse('accounts:login')
+        return reverse('accounts:detail', kwargs={'pk': self.object.pk})

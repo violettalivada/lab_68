@@ -1,11 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.conf import settings
 from django import forms
 from django.contrib.auth import get_user_model
 
-from .models import AuthToken, Profile
+from .models import AuthToken, Profile, TOKEN_TYPE_PASSWORD_RESET
 
 
 class MyUserCreationForm(UserCreationForm):
@@ -93,3 +94,54 @@ class PasswordChangeForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ['password', 'password_confirm', 'old_password']
+
+
+class PasswordResetEmailForm(forms.Form):
+    email = forms.EmailField(required=True, label='Email')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        User = get_user_model()
+        if User.objects.filter(email=email).count() == 0:
+            raise ValidationError('Пользователь с таким email-ом не зарегистрирован')
+        return email
+
+    def send_email(self):
+        User = get_user_model()
+        email = self.cleaned_data.get('email')
+        user = User.objects.filter(email=email).first()
+        token = AuthToken.objects.create(user=user, life_days=3, type=TOKEN_TYPE_PASSWORD_RESET)
+
+        subject = 'Вы запросили восстановление пароля для учётной записи на сайте "Мой Блог"'
+        link = settings.BASE_HOST + reverse('accounts:password_reset', kwargs={'token': token.token})
+        message = f'''Ваша ссылка для восстановления пароля: {link}.
+Если вы считаете, что это ошибка, просто игнорируйте это письмо.'''
+        html_message = f'''Ваша ссылка для восстановления пароля: <a href="{link}">{link}</a>.
+Если вы считаете, что это ошибка, просто игнорируйте это письмо.'''
+        try:
+            user.email_user(subject, message, html_message=html_message)
+        except Exception as e:
+            print(e)
+
+
+class PasswordResetForm(forms.ModelForm):
+    password = forms.CharField(label="Новый пароль", strip=False, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(label="Подтвердите пароль", widget=forms.PasswordInput, strip=False)
+
+    def clean_password_confirm(self):
+        password = self.cleaned_data.get("password")
+        password_confirm = self.cleaned_data.get("password_confirm")
+        if password and password_confirm and password != password_confirm:
+            raise forms.ValidationError('Пароли не совпадают!')
+        return password_confirm
+
+    def save(self, commit=True):
+        user = self.instance
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
+    class Meta:
+        model = get_user_model()
+        fields = ['password', 'password_confirm']

@@ -1,15 +1,18 @@
 from django.contrib.auth import get_user_model, authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, \
+    PasswordResetView, PasswordResetConfirmView
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.generic import View, DetailView, CreateView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import View, FormView, DetailView, CreateView, UpdateView
 from django.conf import settings
 
-from accounts.forms import MyUserCreationForm, UserChangeForm, ProfileChangeForm, PasswordChangeForm
+from accounts.forms import MyUserCreationForm, UserChangeForm, ProfileChangeForm, \
+    PasswordChangeForm, PasswordResetEmailForm, PasswordResetForm
 from .models import AuthToken, Profile
 
 
@@ -135,7 +138,7 @@ class UserChangeView(UserPassesTestMixin, UpdateView):
 
         # if self.request.method == 'POST':
         #     form = ProfileChangeForm(instance=self.object, data=self.request.POST, 
-        #                              files=self.request.FILES)
+        #                                 files=self.request.FILES)
         # else:
         #     form = ProfileChangeForm(instance=self.object)
         # return form
@@ -164,3 +167,34 @@ class UserPasswordChangeView(PasswordChangeView):
 
     def get_success_url(self):
         return reverse('accounts:detail', kwargs={'pk': self.request.user.pk})
+
+
+class UserPasswordResetEmailView(FormView):
+    form_class = PasswordResetEmailForm
+    template_name = 'password_reset_email.html'
+    success_url = reverse_lazy('webapp:index')
+
+    def form_valid(self, form):
+        form.send_email()
+        return super().form_valid(form)
+
+
+class UserPasswordResetView(UpdateView):
+    model = User
+    form_class = PasswordResetForm
+    template_name = 'password_reset.html'
+    success_url = reverse_lazy('accounts:login')
+
+    def get_object(self, queryset=None):
+        token = self.get_token()
+        if token and token.is_alive():
+            return token.user
+        raise Http404('Ссылка не существует или её срок действия истёк')
+
+    def form_valid(self, form):
+        token = self.get_token()
+        token.delete()
+        return super().form_valid(form)
+
+    def get_token(self):
+        return AuthToken.get_token(self.kwargs.get('token'))

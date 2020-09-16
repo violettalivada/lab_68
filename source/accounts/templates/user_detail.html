@@ -5,7 +5,7 @@
 {% block menu %}
     {% if request.user == user_obj %}
         <li><a href="{% url 'accounts:change' user_obj.pk %}">Редактировать</a></li>
-        <li><a href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a></li>
+        <li><a href="{% url "accounts:password_change" %}">Смена пароля</a></li>
     {% endif %}
 {% endblock %}
 

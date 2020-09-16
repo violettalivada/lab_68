@@ -4,7 +4,7 @@
 
 {% block menu %}
     <li><a href="{% url "accounts:detail" user_obj.pk %}">Назад</a></li>
-    <li><a href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a></li>
+    <li><a href="{% url "accounts:password_change" %}">Смена пароля</a></li>
 {% endblock %}
 
 {% block content %}

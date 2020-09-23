@@ -6,7 +6,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.timezone import make_naive
 from django.views.generic import View, DetailView, CreateView, UpdateView, DeleteView
 
-from webapp.models import Article
+from webapp.models import Article, Tag
 from webapp.forms import ArticleForm, BROWSER_DATETIME_FORMAT
 from .base_views import SearchView
 
@@ -99,12 +99,24 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     model = Article
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user
+    #     response = super().form_valid(form)
+    #     tag, _ = Tag.objects.get_or_create(name=self.request.user.username)
+    #     form.instance.tags.add(tag)
+    #     return response
+    #
+    # def get_success_url(self):
+    #     return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
 
-    def get_success_url(self):
-        return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
+    def form_valid(self, form):
+        article = form.save(commit=False)
+        article.author = self.request.user
+        article.save()
+        form.save_m2m()
+        tag, _ = Tag.objects.get_or_create(name=self.request.user.username)
+        article.tags.add(tag)
+        return redirect('webapp:article_view', pk=article.pk)
 
 
 class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
@@ -121,8 +133,20 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
         return {'publish_at': make_naive(self.object.publish_at)\
             .strftime(BROWSER_DATETIME_FORMAT)}
 
-    def get_success_url(self):
-        return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     tag, _ = Tag.objects.get_or_create(name=self.request.user.username)
+    #     form.instance.tags.add(tag)
+    #     return response
+    #
+    # def get_success_url(self):
+    #     return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        article = form.save()
+        tag, _ = Tag.objects.get_or_create(name=self.request.user.username)
+        article.tags.add(tag)
+        return redirect('webapp:article_view', pk=article.pk)
 
 
 class ArticleDeleteView(UserPassesTestMixin, DeleteView):

@@ -22,6 +22,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
     publish_at = models.DateTimeField(verbose_name="Время публикации", blank=True, default=timezone.now)
+    like_count = models.IntegerField(verbose_name="Счётчик лайков", default=0)
 
     def save(self, **kwargs):
         if not self.publish_at:

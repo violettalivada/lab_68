@@ -2,7 +2,7 @@ from django.urls import path, include
 from webapp.views import IndexView, ArticleCreateView, ArticleView, \
     ArticleUpdateView, ArticleDeleteView, \
     ArticleCommentCreateView, ArticleMassActionView, \
-    CommentUpdateView, CommentDeleteView
+    CommentUpdateView, CommentDeleteView, ArticleLikeView, ArticleUnLikeView
 
 app_name = 'webapp'
 
@@ -16,6 +16,8 @@ urlpatterns = [
             path('delete/', ArticleDeleteView.as_view(), name='article_delete'),
             path('comments/add/', ArticleCommentCreateView.as_view(),
                  name='article_comment_add'),
+            path('like/', ArticleLikeView.as_view(), name='article_like'),
+            path('unlike/', ArticleUnLikeView.as_view(), name='article_unlike'),
         ])),
 
         path('add/', ArticleCreateView.as_view(), name='article_create'),

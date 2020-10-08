@@ -1,12 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, \
     UserPassesTestMixin
 from django.core.paginator import Paginator
-from django.shortcuts import redirect
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.timezone import make_naive
 from django.views.generic import View, DetailView, CreateView, UpdateView, DeleteView
 
-from webapp.models import Article, Tag
+from webapp.models import Article, Tag, ArticleLike
 from webapp.forms import ArticleForm, BROWSER_DATETIME_FORMAT
 from .base_views import SearchView
 
@@ -157,3 +158,25 @@ class ArticleDeleteView(UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.request.user.has_perm('webapp.delete_article') or \
             self.get_object().author == self.request.user
+
+
+class ArticleLikeView(View):
+    def post(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, pk=kwargs.get('pk'))
+        like, created = ArticleLike.objects.get_or_create(article=article, user=request.user)
+        if created:
+            article.like_count += 1
+            article.save()
+            return HttpResponse(article.like_count)
+        else:
+            return HttpResponseForbidden()
+
+
+class ArticleUnLikeView(View):
+    def delete(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, pk=kwargs.get('pk'))
+        like = get_object_or_404(article.likes, user=request.user)
+        like.delete()
+        article.like_count -= 1
+        article.save()
+        return HttpResponse(article.like_count)

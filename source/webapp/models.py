@@ -62,3 +62,21 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
+
+class ArticleLike(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, 
+                             related_name='article_likes', verbose_name='Пользователь')
+    article = models.ForeignKey('webapp.Article', on_delete=models.CASCADE,
+                                related_name='likes', verbose_name='Статья')
+
+    def __str__(self):
+        return f'{self.user.username} - {self.article.title}'
+
+    class Meta:
+        verbose_name = 'Лайк'
+        verbose_name_plural = 'Лайки статей'

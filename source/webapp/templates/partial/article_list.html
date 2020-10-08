@@ -33,10 +33,10 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <p>
-                        {{ article.like_count }}
+                        <span class="counter">{{ article.like_count }}</span>
                         {% with article|liked_by:user as liked %}
-                            <a {% if liked %}class="hidden"{% endif %} href="{% url 'webapp:article_like' article.pk %}">Like</a>
-                            <a {% if not liked %}class="hidden"{% endif %} href="{% url 'webapp:article_unlike' article.pk %}">Unlike</a>
+                            <a class="{% if liked %}hidden{% endif %} like" href="{% url 'webapp:article_like' article.pk %}">Like</a>
+                            <a class="{% if not liked %}hidden{% endif %} unlike" href="{% url 'webapp:article_unlike' article.pk %}">Unlike</a>
                         {% endwith %}
                     </p>
                 {% endif %}

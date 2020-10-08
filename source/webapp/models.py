@@ -32,6 +32,10 @@ class Article(models.Model):
                 self.publish_at = Article.objects.get(pk=self.pk).publish_at
         super().save(**kwargs)
 
+    def liked_by(self, user):
+        likes = self.likes.filter(user=user)
+        return likes.count() > 0
+
     def __str__(self):
         return "{}. {}".format(self.pk, self.title)
 

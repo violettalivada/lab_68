@@ -31,35 +31,28 @@ class IndexView(SearchView):
 class ArticleMassActionView(PermissionRequiredMixin, View):
     redirect_url = 'webapp:index'
     permission_required = 'webapp.delete_article'
-    queryset = None  # изначально queryset = None
+    queryset = None
 
     def has_permission(self):
         if super().has_permission():
-            return True  # админы и модеры могут удалять
+            return True
         articles = self.get_queryset()
         author_ids = articles.values('author_id')
         for item in author_ids:
             if item['author_id'] != self.request.user.pk:
-                return False  # остальные могут удалять, только если среди выбранных статей
-        return True           # нет чужих статей
+                return False
+        return True
 
-    # метод 'post' проверяет наличие ключа 'delete' в запросе,
-    # и тогда удаляет
     def post(self, request, *args, **kwargs):
         if 'delete' in self.request.POST:
             return self.delete(request, *args, **kwargs)
         return redirect(self.redirect_url)
 
-    # метод 'delete' не проверяет наличие ключа 'delete' в запросе,
-    # и все равно удаляет
     def delete(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         queryset.delete()
         return redirect(self.redirect_url)
 
-    # "кэширующий" метод.
-    # при первом доступе к свойству queryset находит и сохраняет его в self.queryset
-    # при повторном доступе не ищет, возвращает сохранённое значение.
     def get_queryset(self):
         if self.queryset is None:
             ids = self.request.POST.getlist('selected_articles', [])
@@ -100,16 +93,6 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     model = Article
 
-    # def form_valid(self, form):
-    #     form.instance.author = self.request.user
-    #     response = super().form_valid(form)
-    #     tag, _ = Tag.objects.get_or_create(name=self.request.user.username)
-    #     form.instance.tags.add(tag)
-    #     return response
-    #
-    # def get_success_url(self):
-    #     return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
-
     def form_valid(self, form):
         article = form.save(commit=False)
         article.author = self.request.user
@@ -133,15 +116,6 @@ class ArticleUpdateView(PermissionRequiredMixin, UpdateView):
     def get_initial(self):
         return {'publish_at': make_naive(self.object.publish_at)\
             .strftime(BROWSER_DATETIME_FORMAT)}
-
-    # def form_valid(self, form):
-    #     response = super().form_valid(form)
-    #     tag, _ = Tag.objects.get_or_create(name=self.request.user.username)
-    #     form.instance.tags.add(tag)
-    #     return response
-    #
-    # def get_success_url(self):
-    #     return reverse('webapp:article_view', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         article = form.save()

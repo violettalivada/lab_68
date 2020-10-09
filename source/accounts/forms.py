@@ -27,11 +27,6 @@ class MyUserCreationForm(UserCreationForm):
             Profile.objects.create(user=user)
         return user
 
-    # def save(self, commit=True):
-    #     user = super().save(commit=commit)
-    #     Profile.objects.create(user=user)
-    #     return user
-
     def create_token(self, user):
         return AuthToken.objects.create(user=user)
 

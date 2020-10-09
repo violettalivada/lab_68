@@ -1,9 +1,9 @@
 async function makeRequest(url, method='GET') {
     let response = await fetch(url, {method});
 
-    if (response.ok) {  // нормальный ответ
+    if (response.ok) {
         return await response.text();
-    } else {            // ошибка
+    } else {
         let error = new Error(response.statusText);
         error.response = response;
         throw error;

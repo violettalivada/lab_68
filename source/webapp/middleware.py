@@ -1,9 +1,6 @@
 from django.http import Http404, HttpResponseNotFound
 
 
-# Пример блокирования запроса в Middleware
-# если в адресе запроса содержатся какие-то цифры,
-# похожие на id от 1 до 100 - он выкидывает ошибку 404.
 class RestrictIds:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -15,7 +12,6 @@ class RestrictIds:
                 pk = int(part)
                 if pk in range(1, 101):
                     raise Http404('Объекты с id от 1 до 100 недоступны для просмотра')
-                    # return HttpResponseNotFound('Объекты с id от 1 до 100 недоступны для просмотра')
             except ValueError:
                 pass
 
@@ -23,9 +19,6 @@ class RestrictIds:
         return response
 
 
-# Пример добавления переменных в объект запроса
-# он добавляет в запрос свойство pks, в котором хранит
-# все подходящие (похожие на id) цифры из адреса запроса.
 class FindIds:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -44,9 +37,6 @@ class FindIds:
         return response
 
 
-
-# Пример модификации ответа в Middleware
-# он меняет тип контента в ответе, если в запросе передан ключ to_text.
 class TextResponse:
     def __init__(self, get_response):
         self.get_response = get_response
